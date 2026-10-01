@@ -15,5 +15,7 @@ Python, pandas, scikit-learn, XGBoost, matplotlib, seaborn
 
 ## 🚀 Как запустить
 ### 1. Установить зависимости
-```bash
 pip install -r requirements.txt
+
+### 2. Запустить скрипт
+python churn_analysis.py
