@@ -14,8 +14,7 @@ Python, pandas, scikit-learn, XGBoost, matplotlib, seaborn
 - Ключевые факторы: просрочки, количество обращений
 
 ## 🚀 Как запустить
-### 1. Установить зависимости
-pip install -r requirements.txt
 
-### 2. Запустить скрипт
-python churn_analysis.py
+### 1. Установить зависимости
+```bash
+pip install -r requirements.txt
