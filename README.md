@@ -14,7 +14,6 @@ Python, pandas, scikit-learn, XGBoost, matplotlib, seaborn
 - Ключевые факторы: просрочки, количество обращений
 
 ## 🚀 Как запустить
-
 ### 1. Установить зависимости
 ```bash
 pip install -r requirements.txt
