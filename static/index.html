@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Прогноз оттока клиентов</h1>
+        <form id="churn-form">
+            <div class="form-group">
+                <label for="tenure">Tenure (мес.)</label>
+                <input type="range" id="tenure" name="tenure" min="0" max="72" value="12">
+                <span id="tenure-value">12</span>
+            </div>
+            <div class="form-group">
+                <label for="monthlycharges">MonthlyCharges ($)</label>
+                <input type="number" id="monthlycharges" name="monthlycharges" min="0" step="0.01" value="50">
+            </div>
+            <div class="form-group">
+                <label for="totalcharges">TotalCharges ($)</label>
+                <input type="number" id="totalcharges" name="totalcharges" min="0" step="0.01" value="500">
+            </div>
+            <div class="form-group">
+                <label for="contract">Contract</label>
+                <select id="contract" name="contract">
+                    <option value="Month-to-month">Month-to-month</option>
+                    <option value="One year">One year</option>
+                    <option value="Two year">Two year</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="internetservice">InternetService</label>
+                <select id="internetservice" name="internetservice">
+                    <option value="DSL">DSL</option>
+                    <option value="Fiber optic">Fiber optic</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="phoneservice">PhoneService</label>
+                <select id="phoneservice" name="phoneservice">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="techsupport">TechSupport</label>
+                <select id="techsupport" name="techsupport">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="onlinesecurity">OnlineSecurity</label>
+                <select id="onlinesecurity" name="onlinesecurity">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="onlinebackup">OnlineBackup</label>
+                <select id="onlinebackup" name="onlinebackup">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="deviceprotection">DeviceProtection</label>
+                <select id="deviceprotection" name="deviceprotection">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="streamingtv">StreamingTV</label>
+                <select id="streamingtv" name="streamingtv">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="streamingmovies">StreamingMovies</label>
+                <select id="streamingmovies" name="streamingmovies">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="paymentmethod">PaymentMethod</label>
+                <select id="paymentmethod" name="paymentmethod">
+                    <option value="Electronic check">Electronic check</option>
+                    <option value="Mailed check">Mailed check</option>
+                    <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                    <option value="Credit card (automatic)">Credit card (automatic)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="seniorcitizen">SeniorCitizen</label>
+                <select id="seniorcitizen" name="seniorcitizen">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="partner">Partner</label>
+                <select id="partner" name="partner">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dependents">Dependents</label>
+                <select id="dependents" name="dependents">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="multiplelines">MultipleLines</label>
+                <select id="multiplelines" name="multiplelines">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="No phone service">No phone service</option>
+                </select>
+            </div>
+            <button type="submit">Прогнозировать</button>
+            <button type="button" id="compare-btn">Сравнить модели</button>
+        </form>
+
+        <div id="result" class="result hidden">
+            <h2>Результат</h2>
+            <div class="probability-section">
+                <span>Вероятность оттока:</span>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <span id="probability-text">0%</span>
+            </div>
+            <p id="prediction-label"></p>
+            <div id="factors"></div>
+            <p id="model-info"></p>
+        </div>
+
+        <div id="compare-result" class="compare-result hidden">
+            <h2>Сравнение моделей</h2>
+            <table id="compare-table">
+                <thead>
+                    <tr>
+                        <th>Модель</th>
+                        <th>Вероятность</th>
+                        <th>Прогноз</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>
